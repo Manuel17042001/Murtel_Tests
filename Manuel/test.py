@@ -52,5 +52,5 @@ def analyze_image(image_path):
 
 
 # Testen mit einem Bild
-image_path = "RGB_imgs/RGB_imgs/m201014200425513.jpg"
+image_path = "../RGB_imgs/RGB_imgs/m201014200425513.jpg"
 result = analyze_image(image_path)
