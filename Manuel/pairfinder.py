@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 import os
 
 
-def find_files_with_prefix(directory, prefix):
+def find_csv_files_with_prefix(directory, prefix):
     """
     Sucht nach Dateien in einem Verzeichnis, die mit einem bestimmten Präfix beginnen.
 
@@ -14,8 +14,9 @@ def find_files_with_prefix(directory, prefix):
     try:
         for root, _, files in os.walk(directory):
             for file in files:
-                if file.startswith(prefix):
-                    matching_files.append(os.path.join(root, file))
+                if file.endswith(".csv"):
+                    if file.startswith(prefix):
+                        matching_files.append(os.path.join(root, file))
     except Exception as e:
         print(f"Fehler bei der Suche: {e}")
     return matching_files
@@ -29,22 +30,17 @@ def parse_image_time(filename):
     :return: Datetime-Objekt oder None, wenn der Name ungültig ist.
     """
     try:
-        if '.' in filename:
-            base, ext = filename.split('.')
-        else:
-            base = filename
-
-        if len(base) < 12:
+        if len(filename) < 12:
             return None  # Überspringe ungültige Dateinamen
 
-        year = int("20" + base[1:3])  # Addiere '20' zum Jahr
-        month = int(base[3:5])
-        day = int(base[5:7])
-        hour = int(base[7:9])
-        minute = int(base[9:11])
-
+        year = int("20" + filename[1:3])  # Addiere '20' zum Jahr
+        month = int(filename[3:5])
+        day = int(filename[5:7])
+        hour = int(filename[7:9])
+        minute = int(filename[9:11])
         return datetime(year, month, day, hour, minute)
     except Exception as e:
+        print(f"Error by parsing image to time: {e}")
         return None
 
 
@@ -106,7 +102,7 @@ def find_image_pairs(rgb_dir, csv_dir, output_file, time_window=20):
     for rgb_file in os.listdir(rgb_dir):
         if rgb_file.endswith('.jpg'):
             rgb_path = os.path.join(rgb_dir, rgb_file)
-            csv_filenames = find_files_with_prefix(csv_dir, prefix=rgb_file[0:5])
+            csv_filenames = find_csv_files_with_prefix(csv_dir, prefix=rgb_file[0:5])
             csv_path = find_nearest_image(rgb_file, csv_filenames, time_window)
             if csv_path is not None:
                 pairs.append((rgb_path, csv_path))
