@@ -1,6 +1,8 @@
 # Jeeez what is all of this :D
 **/*.jpg
 **/*.png
+useful/*
+not_useful/*
 
 
 
