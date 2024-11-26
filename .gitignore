@@ -1,5 +1,7 @@
 **/*.jpg
 **/*.png
-Manuel/useful/*
-Manuel/not_useful/*
-RGB_imgs/*
+
+venv
+/Manuel/not_useful/
+/Manuel/useful/
+/RGB_imgs/
