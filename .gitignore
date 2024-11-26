@@ -1,9 +1,9 @@
 # Jeeez what is all of this :D
 **/*.jpg
 **/*.png
-useful/*
-not_useful/*
-
+Manuel/useful/*
+Manuel/not_useful/*
+RGB_imgs/*
 
 
 # Byte-compiled / optimized / DLL files
